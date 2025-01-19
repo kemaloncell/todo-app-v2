@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View, FlatList, Button } from 'react-native';
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
+import { StatusBar } from 'expo-status-bar'
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState('')
@@ -30,32 +31,35 @@ export default function App() {
  }
 
   return (
-    <View style={styles.AppContainer}>
-       <Button
-          title='Add a new goal'
-          color='#5e0acc'
-          onPress={startAddGoalHandler}
-       />       
-       {modalIsVisible && <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} onCancel={endAddGoalHandler}  />}
-        <View style={styles.goalsContainer}>
-          <FlatList 
-          alwaysBounceVertical={false}
-          data={courseGoals}
-          renderItem={(itemData) => {
-            return(
-              <GoalItem 
-              text={itemData.item.text} 
-              id={itemData.item.id}
-              onDeleteItem={deleteGoalHandler}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item.id
-          }}
-          />
-        </View> 
-    </View>
+    <>
+      <StatusBar style='light' />
+      <View style={styles.AppContainer}>
+        <Button
+            title='Add a new goal'
+            color='#a065ec'
+            onPress={startAddGoalHandler}
+        />       
+        {modalIsVisible && <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} onCancel={endAddGoalHandler}  />}
+          <View style={styles.goalsContainer}>
+            <FlatList 
+            alwaysBounceVertical={false}
+            data={courseGoals}
+            renderItem={(itemData) => {
+              return(
+                <GoalItem 
+                text={itemData.item.text} 
+                id={itemData.item.id}
+                onDeleteItem={deleteGoalHandler}
+                />
+              );
+            }}
+            keyExtractor={(item, index) => {
+              return item.id
+            }}
+            />
+          </View> 
+      </View>
+    </>
   );
 }
  
